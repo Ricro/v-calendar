@@ -40,20 +40,3 @@ export * from './components';
 
 // Allow util use individually
 export * from './utils';
-
-// var app = new Vue({
-//   el: '#app',
-//   template: `
-//     <p> test <p>
-//   `,
-//   data () {
-//     return {
-//       attributesDates: {},
-//       startDate: null,
-//       selectedDate: {
-//         start: null,
-//         end: null
-//       }
-//     }
-//   }
-// })
