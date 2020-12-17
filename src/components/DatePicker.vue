@@ -446,17 +446,19 @@ export default {
         formatInput: true,
         hidePopover: this.isDate,
       };
-      if (this.isRange) {
-        if (!this.isDragging) {
-          this.dragTrackingValue = { ...day.range };
+      if (!day.isDisabled) {
+        if (this.isRange) {
+          if (!this.isDragging) {
+            this.dragTrackingValue = { ...day.range };
+          } else {
+            this.dragTrackingValue.end = day.date;
+          }
+          opts.isDragging = !this.isDragging;
+          opts.hidePopover = opts.hidePopover && !opts.isDragging;
+          this.updateValue(this.dragTrackingValue, opts);
         } else {
-          this.dragTrackingValue.end = day.date;
+          this.updateValue(day.date, opts);
         }
-        opts.isDragging = !this.isDragging;
-        opts.hidePopover = opts.hidePopover && !opts.isDragging;
-        this.updateValue(this.dragTrackingValue, opts);
-      } else {
-        this.updateValue(day.date, opts);
       }
     },
     onDayMouseEnter(day) {
@@ -573,8 +575,9 @@ export default {
       // 2. Validation (date or range)
       if (
         this.hasValue(normalizedValue) &&
-        this.disabledAttribute &&
-        this.disabledAttribute.intersectsDate(normalizedValue)
+        this.disabledDates &&
+        (this.disabledDates.includes(this.formatDate(normalizedValue.end)) ||
+        this.disabledDates.includes(this.formatDate(normalizedValue.start)))
       ) {
         if (isDragging) return;
         normalizedValue = this.value_;
@@ -765,6 +768,12 @@ export default {
         new Error('Navigation disabled while calendar is not yet displayed'),
       );
     },
+    formatDate(date) {
+      if (date) {
+        return [date.getFullYear(), date.getMonth() + 1, date.getDate()].join('-');
+      }
+      return '';
+    }
   },
 };
 </script>
