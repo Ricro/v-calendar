@@ -18,6 +18,7 @@
         }
       }"
       :disabled-dates="disabledDates"
+      :attributes="attrs"
     />
   </div>
 </template>
@@ -35,9 +36,25 @@ export default {
     }
   },
   computed: {
+    attrs () {
+      return [{
+        key: 1,
+        highlight: {
+          contentClass: 'semi-open',
+          class: 'semi-open-class',
+        },
+        popover: {
+          customData: {
+            text: `Départ uniquement`
+          },
+          visibility: 'hover'
+        },
+        dates: ["2020-12-17", "2020-12-16", "2020-12-26", "2020-12-27"]
+      }]
+    },
 
     disabledDates () {
-      return ["2020-12-17", "2020-12-18"]
+      return ["2020-12-17", "2020-12-16", "2020-12-19", "2020-12-20", "2020-12-26", "2020-12-27"]
       // if (this.isDragging) {
       //   let availableDates = this.getAvailableDates()
       //   console.log(availableDates)

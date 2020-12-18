@@ -578,6 +578,7 @@ export default {
         this.disabledDates &&
         (this.disabledDates.includes(this.formatDate(normalizedValue.end)) ||
         this.disabledDates.includes(this.formatDate(normalizedValue.start)))
+        // || this.isDayUnbreakble()
       ) {
         if (isDragging) return;
         normalizedValue = this.value_;
